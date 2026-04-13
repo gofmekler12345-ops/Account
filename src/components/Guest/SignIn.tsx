@@ -1,16 +1,19 @@
 import {useContext, useState} from "react";
 import {AuthContext} from "../../context/AuthContext.ts";
+import {useNavigate} from "react-router";
 
 const SignIn = () => {
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
     const { login_context } = useContext(AuthContext)!;
+    const navigate = useNavigate();
 
     const handleClickSignIn = () => {
         //TODO sign in logic
         const fakeToken = "qwerty12345";
         login_context(fakeToken);
         alert("Sign in successful");
+        navigate("/profile");
     }
 
     const handleClickClear=()=>{
