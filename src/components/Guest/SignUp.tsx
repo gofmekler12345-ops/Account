@@ -1,17 +1,19 @@
 import {useState} from "react";
+import {useAppDispatch} from "../../app/hooks.ts";
+import {registerUser} from "../../features/api/accountApi.ts";
 
 const SignUp = () => {
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
+    const dispatch = useAppDispatch();
 
     const handleClickSignUp = () => {
-        //TODO sign up logic
-        alert("Sign in successful");
+        dispatch(registerUser({login, password, firstName, lastName}));
     }
 
-    const handleClickClear=()=>{
+    const handleClickClear = () => {
         setLogin('');
         setPassword('');
         setFirstName('');
@@ -20,42 +22,38 @@ const SignUp = () => {
 
     return (
         <>
-            <label>
-                Login:
+            <label>Login:
                 <input
                     type="text"
                     value={login}
-                    onChange={(e) => {setLogin(e.target.value)}}
+                    onChange={(e) => setLogin(e.target.value)}
                 />
             </label>
-            <label>
-                Password:
+            <label>Password:
                 <input
                     type="password"
                     value={password}
-                    onChange={(e) => {setPassword(e.target.value)}}
+                    onChange={(e) => setPassword(e.target.value)}
                 />
             </label>
-            <label>
-                First Name:
+            <label>First Name:
                 <input
                     type="text"
                     value={firstName}
-                    onChange={(e) => {setFirstName(e.target.value)}}
+                    onChange={(e) => setFirstName(e.target.value)}
                 />
             </label>
-            <label>
-                Last Name:
+            <label>Last Name:
                 <input
                     type="text"
                     value={lastName}
-                    onChange={(e) => {setLastName(e.target.value)}}
+                    onChange={(e) => setLastName(e.target.value)}
                 />
             </label>
-            <button onClick={handleClickSignUp}> Sign Up</button>
-            <button onClick={handleClickClear}> Clear</button>
+            <button onClick={handleClickSignUp}>Sign Up</button>
+            <button onClick={handleClickClear}>Clear</button>
         </>
-    );
-};
+    )
+}
 
 export default SignUp;

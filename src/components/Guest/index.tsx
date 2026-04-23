@@ -11,7 +11,7 @@ const Guest = () => {
                 Switch to {isSignIn ? "Sign Up" : "Sign In"}
             </button>
         </div>
-    );
-};
+    )
+}
 
 export default Guest;

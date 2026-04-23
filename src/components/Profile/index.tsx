@@ -1,28 +1,23 @@
 import ProfileData from "./ProfileData.tsx";
 import UpdateUser from "./UpdateUser.tsx";
-import {useContext} from "react";
-import {AuthContext} from "../../context/AuthContext.ts";
-import {useNavigate} from "react-router";
+import {useAppDispatch} from "../../app/hooks.ts";
+import {clearToken} from "../../features/token/tokenSlice.ts";
+import {clearUser} from "../../features/user/userSlice.ts";
 
 const Profile = () => {
-
-    const { logout } = useContext(AuthContext)!;
-    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
     const handleClickLogout = () => {
-        //TODO log out logic
-        logout();
-        alert("Log out successful");
-        navigate("/");
+        dispatch(clearToken());
+        dispatch(clearUser());
     }
-
     return (
         <div>
-            <ProfileData />
-            <button onClick={handleClickLogout}> Log out</button>
+            <ProfileData/>
+            <button onClick={handleClickLogout}>Logout</button>
             <UpdateUser/>
         </div>
-    );
-};
+    )
+}
 
 export default Profile;

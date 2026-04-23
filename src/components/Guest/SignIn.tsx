@@ -1,48 +1,43 @@
-import {useContext, useState} from "react";
-import {AuthContext} from "../../context/AuthContext.ts";
-import {useNavigate} from "react-router";
+import {useState} from "react";
+import {useAppDispatch} from "../../app/hooks.ts";
+import {fetchUser} from "../../features/api/accountApi.ts";
+import {createToken} from "../../utils/constans.ts";
+
 
 const SignIn = () => {
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
-    const { login_context } = useContext(AuthContext)!;
-    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
     const handleClickSignIn = () => {
-        //TODO sign in logic
-        const fakeToken = "qwerty12345";
-        login_context(fakeToken);
-        alert("Sign in successful");
-        navigate("/profile");
+        dispatch(fetchUser(createToken(login, password)));
     }
 
-    const handleClickClear=()=>{
+    const handleClickClear = () => {
         setLogin('');
         setPassword('');
     }
 
     return (
         <>
-            <label>
-                Login:
+            <label>Login:
                 <input
                     type="text"
                     value={login}
-                    onChange={(e) => {setLogin(e.target.value)}}
+                    onChange={(e) => setLogin(e.target.value)}
                 />
             </label>
-            <label>
-                Password:
+            <label>Password:
                 <input
                     type="password"
                     value={password}
-                    onChange={(e) => {setPassword(e.target.value)}}
+                    onChange={(e) => setPassword(e.target.value)}
                 />
             </label>
-            <button onClick={handleClickSignIn}> Sign In</button>
-            <button onClick={handleClickClear}> Clear</button>
+            <button onClick={handleClickSignIn}>Sign In</button>
+            <button onClick={handleClickClear}>Clear</button>
         </>
-    );
-};
+    )
+}
 
 export default SignIn;

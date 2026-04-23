@@ -3,18 +3,19 @@ import EditProfile from "./EditProfile.tsx";
 import ChangePassword from "./ChangePassword.tsx";
 import {UPDATE_MODE_CHANGE_PASSWORD, UPDATE_MODE_DEFAULT, UPDATE_MODE_EDIT_PROFILE} from "../../utils/constans.ts";
 
+
 const UpdateUser = () => {
     const [updateMode, setUpdateMode] = useState(UPDATE_MODE_DEFAULT);
 
-    const close=()=>{
+    const close = () => {
         setUpdateMode(UPDATE_MODE_DEFAULT);
     }
 
     switch (updateMode) {
         case UPDATE_MODE_EDIT_PROFILE:
-            return <EditProfile close={close}/>
+            return <EditProfile close={close}/>;
         case UPDATE_MODE_CHANGE_PASSWORD:
-            return <ChangePassword close={close}/>
+            return <ChangePassword close={close}/>;
         default:
             return (
                 <div>
@@ -23,6 +24,6 @@ const UpdateUser = () => {
                 </div>
             )
     }
-};
+}
 
 export default UpdateUser;
