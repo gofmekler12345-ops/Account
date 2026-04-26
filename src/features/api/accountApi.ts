@@ -3,30 +3,12 @@ import {fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 import {base_url} from "../../utils/constans.ts";
 import type {UserProfile, UserRegister, UserUpdate} from "../../utils/types.ts";
 
-interface Post {
-    id: number;
-    name: string;
-}
-
 export const accountApi = createApi({
     reducerPath: 'account',
     baseQuery: fetchBaseQuery({baseUrl: base_url}),
     tagTypes: ['Post'],
     endpoints: builder =>
         ({
-            getPosts: builder.query<Post[], void>({
-                query: () => '/post',
-                providesTags: (result) => {
-                    if (result)
-                    {
-                        return [...result.map(({id}) => ({type: 'Post' as const, id})),
-                            {type: 'Post', id:'LIST'},];
-                    }
-                    else{
-                        return [{type: 'Post', id:'LIST'}]
-                    }
-                }
-            }),
             registerUser: builder.mutation<UserProfile, UserRegister>({
                 query: (user) => ({
                     url: 'account/register',
@@ -41,7 +23,8 @@ export const accountApi = createApi({
                     headers: {
                         Authorization: token
                     }
-                })
+                }),
+                providesTags:['Post']
             }),
             updateUser: builder.mutation<UserProfile, { user: UserUpdate, login: string, token: string }>({
                 query: ({user, login, token}) => ({
@@ -52,7 +35,7 @@ export const accountApi = createApi({
                         Authorization: token
                     }
                 }),
-                invalidatesTags: [{type: 'Post', id:'LIST'}]
+                invalidatesTags: ['Post']
             }),
             changePassword: builder.mutation<void, { newPassword: string, token: string }>({
                 query: ({newPassword, token}) => ({
